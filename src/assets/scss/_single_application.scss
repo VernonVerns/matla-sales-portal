@@ -1,0 +1,328 @@
+#single_application {
+    .content-part {
+        padding: 0 1.5em;
+        padding-bottom: 6em;
+        height: calc(100vh - 140px);
+
+        .sec-title {
+            font-size: 18px;
+            margin: 0;
+            margin-bottom: 0.5em;
+            font-weight: 500;
+            color: $text-color;
+        }
+
+        .header-part {
+            padding: 2em 0; 
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2em;
+
+            .applicant {
+                h1 {
+                    font-size: 30px;
+                    font-weight: 600;
+                    margin: 0;
+                    color: black;
+                }
+
+                span {
+                    font-size: 18px;
+                    color: text-color;
+                }
+            }
+
+            .quick-details {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                column-gap: 1em;
+                row-gap: 1em;
+
+                .detail-item {
+                    background-color: $light-grey;
+                    padding: 0.5em 1em;
+                    width: 200px;
+                    
+                    border-radius: 5px;
+
+                    span {
+                        font-size: 12px;
+                        font-weight: 300;
+                        text-transform: uppercase;
+                        color: rgba(0,0,0,0.5);
+                    }
+
+                    h4 {
+                        font-size: 16px;
+                        margin: 0;
+                        color: $text-color;
+                        font-weight: 400;
+                    }
+                }
+            }
+            
+        }
+
+        .single-application {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            column-gap: 1em;
+
+            .details-side {
+                .amount-details {
+                    display: flex;
+                    flex-direction: row;
+                    column-gap: 3em;
+                    align-items: center;
+                    margin-bottom: 2em;
+
+                    .qualifying {
+                        h1 {
+                            font-size: 40px;
+                            color: $text-color;
+                            margin: 0;
+                        }
+
+                        span {
+                            font-size: 16px;
+                            color: $text-color;
+                            font-weight: 400;
+                            text-transform: uppercase;
+                        }
+                    }
+
+                    .installments {
+                        background-color: orange;
+                        color: $white-color;
+                        padding: 1em;
+                        border-radius: 5px;
+
+                        h4 {
+                            margin: 0;
+                            font-size: 20px;
+                            font-weight: 600;
+                        }
+
+                        span {
+                            font-size: 16px;
+                        }
+
+                    }
+                }
+
+                .more-details {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    column-gap: 1em;
+                    row-gap: 1em;
+                }
+
+                .sec-title {
+                    font-size: 16px;
+                }
+
+                .full-detail {
+                    background-color: $white-color;
+                    border: 1px solid $light-grey;
+                    border-radius: 5px;
+                    padding: 1em;
+
+                    table {
+                        width: 100%;
+                        font-size: 14px;
+                        font-weight: 400;
+
+                        tr {
+                            td {
+                                color: $text-color;
+
+                                &:last-child {
+                                    font-weight: 500;
+                                }
+                            }
+
+                            &:last-child {
+                                border-bottom-color: $white-color;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .attachments-list {
+                border: 1px solid $light-grey;
+                font-size: 14px;
+
+                thead {
+                    background-color: $text-color;
+
+                    th {
+                        color: $white-color;
+                        font-weight: 500;
+                    }
+                }
+
+                td {
+                    vertical-align: middle;
+                }
+
+                .view-btn {
+                    border: 0;
+                    background-color: $light-grey;
+                    border-radius: 3px;
+                    padding: 0.3em;
+                    width: 100%;
+                    font-size: 12px;
+                }
+
+                .decline-approve {
+                    display: flex;
+                    flex-direction: row;
+                    column-gap: 0.5em;
+                    margin-top: 0.5em;
+
+                    button {
+                        width: 100%;
+                        border: 0;
+                        padding: 0.3em;
+                        font-size: 12px;
+
+                        &.approve-btn {
+                            background-color: $primary-color;
+                            color: $white-color;
+                        }
+
+                        &.decline-btn {
+                            background-color: red;
+                            color: $white-color;
+                        }
+                    }
+                    
+                }
+
+                .status {
+                    span {
+                        &.verified {
+                            display: inline-block;
+                            background-color: $primary-color;
+                            width: 14px;
+                            height: 14px;
+                            border-radius: 7px;
+                            font-size: 8px;
+                            color: $white-color;text-align: center;
+                        }
+
+                        &.pending {
+                            color: orange;
+                        }
+                    }
+                }
+            }
+
+            .action-btns {
+                position: absolute;
+                width: calc(100vw - 80px);
+                bottom: 1px;
+                right: 0;
+                background-color: $white-color;
+                padding: 0.5em 1em;
+                border-top: 1px solid $light-grey;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                column-gap: 1em;
+
+                .main-btn {
+                    display: inline !important;
+                    width: auto !important;
+                }
+
+                .decline-btn {
+                    background-color: red;
+                    padding: 0.5em 2em;
+                    border-radius: 5px;
+                    border: 0;
+                    color: $white-color;
+                }
+            }
+        }
+    }
+}
+
+.decline-reason {
+    position: absolute;
+    right: 2em;
+    bottom: 5em;
+    background-color: $white-color;
+    width: 100%;
+    max-width: 350px;
+    border: 1px solid $light-grey;
+    
+
+    .content-container {
+        padding: 1em;
+        position: relative;
+
+        h5 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 1em;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 0.5em;
+            top: 0.5em;
+            background-color: transparent;
+            border: 0;
+            color: $text-color;
+        }
+    
+        .input-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            column-gap: 0.5em;
+            margin-bottom: 0.5em;
+    
+            input {
+                width: initial;
+                cursor: pointer;
+                margin: 0;
+            }
+    
+            label {
+                color: $text-color;
+                cursor: pointer;
+            }
+    
+            input:checked + label {
+                color: $text-color;
+                font-weight: 500;  
+            }
+        }
+    
+        .other-reason {
+            margin-top: 1em;
+            margin-bottom: 1em;
+            padding: 0.5em 1em;
+            font-weight: 400;
+        }
+    
+        .decline-btns {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            column-gap: 1em;
+    
+            button {
+                padding: 0.5em 1.5em !important;
+                font-size: 14px;
+                width: auto;
+            }
+        }
+    }
+}
