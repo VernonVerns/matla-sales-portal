@@ -11,6 +11,7 @@ import Dashboard from "../pages/Dashboard";
 import Applications from "../pages/Applications";
 import SingleApplication from "../pages/SingleApplication";
 import AllApplications from "../pages/AllApplications";
+import ChatWithClient from "../pages/ChatWithClient";
 
 const router = createBrowserRouter(
     createRoutesFromElements([
@@ -20,7 +21,9 @@ const router = createBrowserRouter(
             <Route path="applications" element={<AllApplications />} children={[
                 <Route key="applications" path="" element={<Applications />}/>,
                 <Route key="single_application" path="single_application" element={<SingleApplication />} />,
+                <Route key="chat-with-client" path="chat_with" element={<ChatWithClient />} />
             ]} />,
+
         </Route>
     ])
 );

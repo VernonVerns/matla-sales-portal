@@ -2,6 +2,7 @@ import React from "react";
 // import DeclineReason from "./DeclineReason";
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
+import { Link } from "react-router-dom";
 
 const SingleApplication = () => {
     return(
@@ -36,17 +37,17 @@ const SingleApplication = () => {
                     <div class="details-side">
                         <div class="amount-details">
                             <div class="qualifying">
-                                <h1>R2800.00</h1>
-                                <span>Qualifies for</span>
+                                <h1>R20,000.00</h1>
+                                <span>Cover Main Member</span>
                             </div>
                             <div class="installments">
-                                <h4>R380.00</h4>
-                                <span>Weekly Installments</span>
+                                <h4>R109.00</h4>
+                                <span>Monthly installments</span>
                             </div>
                         </div>
                         <div class="more-details">
                             <div class="basic-info full-detail">
-                                <h4 class="sec-title">Bank Details</h4>
+                                <h4 class="sec-title">Basic Details</h4>
                                 <table class="table">
                                     <tbody>
                                         <tr>
@@ -122,54 +123,48 @@ const SingleApplication = () => {
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="attachements full-detail">
+                                <h4 class="sec-title">Attachments</h4>
+                                <table class="attachments-list table">
+                                    <thead>
+                                        <tr>
+                                            <th>Document</th>
+                                            <th>Format</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Identity Document</td>
+                                            <td>PDF</td>
+                                            <td>
+                                                <button class="view-btn">View Now</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bank Statement</td>
+                                            <td>PDF</td>
+                                            <td>
+                                                <button class="view-btn">View Now</button>
+                                                
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Proof of Residence</td>
+                                            <td>Image</td>
+                                            <td>
+                                                <button class="view-btn">View Now</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                    <div class="attachements side">
-                        <h4 class="sec-title">Attachments</h4>
-                        <table class="attachments-list table">
-                            <thead>
-                                <tr>
-                                    <th>Document</th>
-                                    <th>Format</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Identity Document</td>
-                                    <td>PDF</td>
-                                    <td class="status"><span class="verified"><i class="fa fa-check"></i></span> Verified</td>
-                                    <td>
-                                        <button class="view-btn">View Now</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Bank Statement</td>
-                                    <td>PDF</td>
-                                    <td class="status"><span class="pending"><i class="fa fa-warning"></i></span> Pending</td>
-                                    <td>
-                                        <button class="view-btn">View Now</button>
-                                        <div class="decline-approve">
-                                            <button type="button" class="approve-btn" title="Mark as verified"><CheckIcon fontSize="inherit"/></button>
-                                            <button type="button" class="decline-btn" title=""><CloseIcon fontSize="inherit"/></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Proof of Residence</td>
-                                    <td>Image</td>
-                                    <td class="status"><span class="verified"><i class="fa fa-check"></i></span> Verified</td>
-                                    <td>
-                                        <button class="view-btn">View Now</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    
                     <div class="action-btns">
-                        <button type="button" class="main-btn" disabled>Approve</button>
-                        <button type="button" class="decline-btn">Decline</button>
+                        <Link to="/applications/chat_with" class="main-btn">Chat With Client</Link>
+                        <button type="button" class="border-btn">Send Mandate</button>
                     </div>
                 </div>
                 {/* <DeclineReason /> */}

@@ -71,6 +71,7 @@
             column-gap: 1em;
 
             .details-side {
+                padding-bottom: 2em;
                 .amount-details {
                     display: flex;
                     flex-direction: row;
@@ -159,72 +160,30 @@
             }
 
             .attachments-list {
-                border: 1px solid $light-grey;
                 font-size: 14px;
 
                 thead {
-                    background-color: $text-color;
 
                     th {
-                        color: $white-color;
+                        color: $light-grey;
                         font-weight: 500;
+                        background-color: transparent;
                     }
                 }
 
                 td {
                     vertical-align: middle;
+                    background-color: transparent;
                 }
 
                 .view-btn {
                     border: 0;
                     background-color: $light-grey;
+                    color: $primary-color;
                     border-radius: 3px;
                     padding: 0.3em;
                     width: 100%;
                     font-size: 12px;
-                }
-
-                .decline-approve {
-                    display: flex;
-                    flex-direction: row;
-                    column-gap: 0.5em;
-                    margin-top: 0.5em;
-
-                    button {
-                        width: 100%;
-                        border: 0;
-                        padding: 0.3em;
-                        font-size: 12px;
-
-                        &.approve-btn {
-                            background-color: $primary-color;
-                            color: $white-color;
-                        }
-
-                        &.decline-btn {
-                            background-color: red;
-                            color: $white-color;
-                        }
-                    }
-                    
-                }
-
-                .status {
-                    span {
-                        &.verified {
-                            display: inline-block;
-                            background-color: $primary-color;
-                            width: 14px;
-                            height: 14px;
-                            border-radius: 7px;
-                            font-size: 8px;
-                            color: $white-color;text-align: center;
-                        }
-
-                        &.pending {
-                            color: orange;
-                        }
-                    }
                 }
             }
 
@@ -246,12 +205,9 @@
                     width: auto !important;
                 }
 
-                .decline-btn {
-                    background-color: red;
-                    padding: 0.5em 2em;
-                    border-radius: 5px;
-                    border: 0;
-                    color: $white-color;
+                .border-btn {
+                    display: inline-block !important;
+                    width: initial;
                 }
             }
         }
