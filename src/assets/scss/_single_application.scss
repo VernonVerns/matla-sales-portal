@@ -25,12 +25,12 @@
                     font-size: 30px;
                     font-weight: 600;
                     margin: 0;
-                    color: black;
+                    color: $white-color;
                 }
 
                 span {
                     font-size: 18px;
-                    color: text-color;
+                    color: $text-color;
                 }
             }
 
@@ -121,11 +121,12 @@
 
                 .sec-title {
                     font-size: 16px;
+                    color: $white-color;
                 }
 
                 .full-detail {
-                    background-color: $white-color;
-                    border: 1px solid $light-grey;
+                    background-color: $accent-color;
+                    border: 1px solid $accent-color;
                     border-radius: 5px;
                     padding: 1em;
 
@@ -137,6 +138,8 @@
                         tr {
                             td {
                                 color: $text-color;
+                                background-color: transparent;
+                                border-color: $primary-color;
 
                                 &:last-child {
                                     font-weight: 500;
@@ -144,9 +147,13 @@
                             }
 
                             &:last-child {
-                                border-bottom-color: $white-color;
+                                td {
+                                    border-bottom-color: transparent;
+                                }
                             }
                         }
+
+                        
                     }
                 }
             }

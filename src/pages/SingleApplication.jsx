@@ -76,29 +76,6 @@ const SingleApplication = () => {
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="employment-details full-detail">
-                                <h4 class="sec-title">Employment Details</h4>
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td>Employee Number</td>
-                                            <td>HCF12345</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Employment Type</td>
-                                            <td>Permanent</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Date of Employment</td>
-                                            <td>Jan 1, 2023</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Contract End Date</td>
-                                            <td>N/A</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
                             <div class="bank-details full-detail">
                                 <h4 class="sec-title">Salary Info</h4>
                                 <table class="table">
