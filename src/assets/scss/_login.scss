@@ -1,0 +1,120 @@
+#login_page {
+    display: grid;
+    grid-template-columns: auto 70vw;
+    height: 100vh;
+
+    .form-side {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1em 2em;
+
+        .header-part {
+            img {
+                width: 250px;
+            }
+        }
+
+        form {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+
+            .form-header {
+                margin-bottom: 2em;
+                text-align: center;
+
+                span {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 20px;
+                    background-color: rgba(255,255,255,0.2);
+                    margin: 1em auto;
+                    color: $white-color;
+                }
+
+                h4 {
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin: 0;
+                    color: $white-color;
+                }
+
+                p {
+                    font-size: 14px;
+                    color: $text-color;
+                }
+            }
+
+            .form-group {
+                margin-bottom: 10px;
+
+                label {
+                    display: block;
+                    font-size: 15px;
+                    color: $light-grey;
+                    font-weight: 500;
+                }
+
+                input {
+                    width: 100%;
+                    padding: 0.5em 1em;
+                    font-size: 16px;
+                    border-radius: 5px;
+                    color: $white-color;
+                }
+            }
+
+            .forgot-password {
+                text-align: right;
+                color: $white-color;
+                font-weight: 500;
+                margin: 0;
+                margin-bottom: 10px;
+            }
+
+            .sign-btn {
+                background-color: $white-color;
+                color: $primary-color;
+                border-radius: 5px;
+                border: none;
+                outline: none;
+                width: 100%;
+                padding: 0.5em 1em;
+                font-size: 16px;
+            }
+        }
+
+        .footer-part {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            p {
+                margin: 0;
+                font-size: 12px;
+                color: $text-color;
+            }
+
+            .terms-links {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                column-gap: 20px;
+                font-size: 12px;
+            }
+        }
+    }
+
+    .image-side {
+        background-image: url('../img/support.jpg');
+        background-position: left;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 40px 0 0 40px;
+    }
+}

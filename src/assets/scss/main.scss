@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+@import "~bootstrap/scss/bootstrap";
+// @import "~w3-css/w3.css";
+
+$primary-color: #141B2E;
+$accent-color: #29375D;
+$dark-color: #212529;
+$white-color: #ffffff;
+$black-color: #181C14;
+$text-color: #b3b3b3;
+$light-grey: #f7f7f7;
+$transition: all 0.58s ease;
+
+* {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $text-color;
+    border-radius: 50px;
+    transition: $transition;
+}
+
+::-webkit-scrollbar:hover {
+    width: 8px;
+    transition: $transition;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+body {
+    background-color: $primary-color;
+    margin: 0;
+    padding: 0;
+}
+
+input {
+    outline: 0 !important;
+    background-color: transparent;
+    border: 1px solid #e6e6e6;
+    border-radius: 2px;
+}
+
+button {
+    outline: 0 !important;
+}
+
+a {
+    outline: none !important;
+    color: $light-grey !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+}
+
+%btn-style {
+	border: 1px solid transparent;
+	background-color: transparent;
+	box-shadow: 4px 4px 9px rgba(0, 0, 0, 0.25);
+	border-radius: 5px;
+	padding: 0.75em 2.5em;
+	font-size: 16px;
+	text-transform: capitalize;
+	font-weight: 500;
+    width: 100%;
+	transition: $transition;
+	display: inline-block;
+
+	&:hover {
+		transform: scale(0.98) !important;
+		transition: $transition;
+	}
+}
+
+.main-btn {
+	@extend %btn-style;
+	color: $white-color !important;
+	background-color: $primary-color;
+}
+
+.border-btn {
+	@extend %btn-style;
+	border-color: $primary-color;
+	box-shadow: none !important;
+	color: $primary-color;
+}
+
+.no-border-btn {
+	@extend %btn-style;
+	color: $accent-color !important;
+	padding: 0.6em 0 !important;
+	box-shadow: none !important;
+}
+
+@import "login";
+@import "main_layout";
+@import "dashboard";
+@import "all_applications";
+@import "reset_tags";

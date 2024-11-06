@@ -1,0 +1,156 @@
+#main_layout {
+    display: grid;
+    grid-template-columns: 80px calc(100vw - 80px);
+    height: 100vh;
+    
+    .side-bar {
+        background-color: $primary-color;
+        height: 100vh;
+        border-right: 1px solid $accent-color;
+        padding: 2em 1em;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        column-gap: 2em;
+
+        img {
+            margin-bottom: 2em;
+            width: 100%;
+        }
+
+        button {
+            width: 100%;
+            margin-bottom: 0.75em;
+            // padding: 0.5em 0;
+            height: 40px;
+            font-size: 18px;
+            color: $light-grey;
+            border: 0;
+            outline: 0;
+            background-color: transparent;
+            transition: $transition;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            &.sign-out {
+                color: #DC4C64;
+            }
+
+            &::before {
+                content: '';
+                height: 40px;
+                width: 5px;
+                display: block;
+                position: absolute;
+                left: -16px;
+                bottom: 0;
+                border-radius: 0 4px 4px 0;
+            }
+
+            &.active-btn {
+                color: $white-color;
+                position: relative;
+
+                &::before {
+                    background-color: $white-color;
+                    transition: $transition;
+                }
+            }
+        }
+    }
+
+    .hcf-inner {
+        height: 100vh;
+
+        .top-menu {
+            background-color: $accent-color;
+            padding: 1.4em;
+            height: 70px;
+
+            h4 {
+                margin: 0;
+                font-size: 17px;
+                font-weight: 500;
+                color: $white-color;
+            }
+        }
+
+        .main-side {
+            padding: 0 1.5em;
+            overflow-y: auto;
+
+            .sec-main {
+                background-color: $accent-color;
+                padding: 2em;
+    
+                .list-table {
+                    width: 100%;
+    
+                    .list-item {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        column-gap: 0.5em;
+                        justify-content: space-between;
+                        align-items: center;
+                        background-color: $primary-color;
+                        padding: 1em;
+                        margin-bottom: 1em;
+    
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+    
+                        .item-data {
+    
+                            &:first-child {
+                                width: 200px;
+                            }
+                            .name {
+                                font-size: 16px;
+                                margin: 0;
+                                font-weight: 600;
+                                color: $white-color;
+                            }
+    
+                            .data-label {
+                                color: $text-color;
+                                font-size: 14px;
+                            }
+    
+                            h4 {
+                                font-size: 16px;
+                                font-weight: 500;
+                                color: $light-grey;
+    
+                                &.pending {
+                                    color: #E4A11B;
+                                }
+    
+                                &.declined {
+                                    color: #DC4C64;
+                                }
+    
+                                &.approved {
+                                    color: #14A44D
+                                }
+                            }
+                            
+                        }
+
+                        .border-btn {
+                            color: $light-grey;
+                            border-color: $light-grey;
+                        }
+
+                        .no-border-btn {
+                            color: $light-grey !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
