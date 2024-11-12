@@ -1,6 +1,15 @@
 import React from 'react';
+import LineGraph from '../components/LineGraph';
+import moment from "moment";
 
 const Dashboard = () => {
+
+    const last30Days = Array.from({ length: 30 }, (_, i) =>
+        moment().subtract(i, "days").format("MMM DD")
+    ).reverse();
+
+    const dummyData = Array.from({ length: 30 }, () => Math.floor(Math.random() * (70 - 2 + 1)) + 2);
+
     return(
         <>
         <div id="dashboard">
@@ -46,21 +55,12 @@ const Dashboard = () => {
             <div className="pending-application">
                 <div className="sec-header">
                     <h4>Pending Applications</h4>
-                    <div className="action-side">
-                        <select name="filter" id="">
-                            <option value=""><i className="fa bars-filter"></i> Filter</option>
-                            <option value="all">All</option>
-                            <option value="recent">Recent</option>
-                            <option value="oldest">Oldest</option>
-                        </select>
-                        <div className="sorted-by">
-                            Sorted by: <span>Recent added</span>
-                        </div>
-                    </div>
                 </div>
+                {last30Days}
+                <LineGraph seriesData={dummyData} xAxisData={last30Days} />,
             </div>
-        </div>
-    </>
+,        </div>
+    ,</>
     )
 }
 
