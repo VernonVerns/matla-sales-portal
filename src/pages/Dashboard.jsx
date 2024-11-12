@@ -1,6 +1,7 @@
 import React from 'react';
 import LineGraph from '../components/LineGraph';
 import moment from "moment";
+import PerfomanceGraph from '../components/PerfomanceGraph';
 
 const Dashboard = () => {
 
@@ -53,11 +54,12 @@ const Dashboard = () => {
             </div>
 
             <div className="pending-application">
-                <div className="sec-header">
+                {/* <div className="sec-header">
                     <h4>Pending Applications</h4>
-                </div>
-                {last30Days}
-                <LineGraph seriesData={dummyData} xAxisData={last30Days} />,
+                </div> */}
+                {/* {last30Days} */}
+                {/* <LineGraph seriesData={dummyData} xAxisData={last30Days} />, */}
+                <PerfomanceGraph/>
             </div>
 ,        </div>
     ,</>
