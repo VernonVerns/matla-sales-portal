@@ -4,7 +4,9 @@ import {
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
+  Navigate,
 } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Login from "../pages/Login";
 import MainLayout from "../layout/MainLayout";
 import Dashboard from "../pages/Dashboard";
@@ -13,19 +15,41 @@ import SingleApplication from "../pages/SingleApplication";
 import AllApplications from "../pages/AllApplications";
 import ChatWithClient from "../pages/ChatWithClient";
 
-const router = createBrowserRouter(
-    createRoutesFromElements([
-        <Route key="/login" path="/" element={<Login />}/>,
-        <Route path="/" element={<MainLayout />}>
-            <Route key="dashboard" path="dashboard" element={<Dashboard />}/>,
-            <Route path="applications" element={<AllApplications />} children={[
-                <Route key="applications" path="" element={<Applications />}/>,
-                <Route key="single_application" path="single_application" element={<SingleApplication />} />,
-                <Route key="chat-with-client" path="chat_with" element={<ChatWithClient />} />
-            ]} />,
+// ProtectedRoute component to check if user is authenticated
+const ProtectedRoute = ({ children }) => {
+  const user = useSelector((state) => state.auth.user);
+  return user ? children : <Navigate to="/" />;
+};
 
-        </Route>
-    ])
+const router = createBrowserRouter(
+  createRoutesFromElements([
+    <Route key="/login" path="/" element={<Login />} />,
+    <Route
+      path="/"
+      element={
+        <ProtectedRoute>
+          <MainLayout />
+        </ProtectedRoute>
+      }
+    >
+      <Route key="dashboard" path="dashboard" element={<Dashboard />} />,
+      <Route path="applications" element={<AllApplications />}>
+        <Route key="applications" path="" element={<Applications />} />,
+        <Route
+          key="single_application"
+          path="single_application/:id" // Dynamic route for application ID
+          element={<SingleApplication />}
+        />
+        ,
+        <Route
+          key="chat-with-client"
+          path="chat_with"
+          element={<ChatWithClient />}
+        />
+        ,
+      </Route>
+    </Route>,
+  ])
 );
 
 export default router;
