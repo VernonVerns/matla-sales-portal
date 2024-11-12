@@ -27,7 +27,7 @@ const SideBar = () => {
                     <div className="main-menu">
                         <button className={`${tab === "dashboard" && "active-btn"}`} onClick={() => onHandleTabChange("dashboard")}><DashboardIcon /></button>
                         <button className={`${tab === "applications" && "active-btn"}`} onClick={() => onHandleTabChange("applications")}><ListIcon /></button>
-                        <button className={`${tab === "finances" && "active-btn"}`} onClick={() => onHandleTabChange("finances")}><AttachMoneyIcon /></button>
+                        {/* <button className={`${tab === "finances" && "active-btn"}`} onClick={() => onHandleTabChange("finances")}><AttachMoneyIcon /></button> */}
                         {/* <button className=""><i className="fa fa-sign-out"></i></button> */}
                     </div>
                 </div>

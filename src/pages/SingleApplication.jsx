@@ -15,12 +15,8 @@ const SingleApplication = () => {
                     </div>
                     <div class="quick-details">
                         <div class="detail-item">
-                            <span>COMPANY</span>
-                            <h4>Moret Mining</h4>
-                        </div>
-                        <div class="detail-item">
                             <span>Applied For</span>
-                            <h4>Medical Expense</h4>
+                            <h4>Main Member</h4>
                         </div>
                         <div class="detail-item">
                             <span>Citizenship</span>
@@ -28,6 +24,10 @@ const SingleApplication = () => {
                         </div>
                         <div class="detail-item">
                             <span>Phone</span>
+                            <h4>0838969792</h4>
+                        </div>
+                        <div class="detail-item">
+                            <span>WHATSAPP NUMBER</span>
                             <h4>0838969792</h4>
                         </div>
                     </div>
@@ -78,24 +78,24 @@ const SingleApplication = () => {
                                 </table>
                             </div>
                             <div class="bank-details full-detail">
-                                <h4 class="sec-title">Salary Info</h4>
+                                <h4 class="sec-title">Beneficiary Details</h4>
                                 <table class="table">
                                     <tbody>
                                         <tr>
-                                            <td>Net Income</td>
-                                            <td>R5500.00</td>
+                                            <td>Full Names</td>
+                                            <td>Gugu Ndebele</td>
                                         </tr>
                                         <tr>
-                                            <td>Total Expenses</td>
-                                            <td>R3200.00</td>
+                                            <td>Age</td>
+                                            <td>23 years</td>
                                         </tr>
                                         <tr>
-                                            <td>Payment Frequency</td>
-                                            <td>Monthly</td>
+                                            <td>Cell Number</td>
+                                            <td>0789483827</td>
                                         </tr>
                                         <tr>
-                                            <td>Contract End Date</td>
-                                            <td>N/A</td>
+                                            <td>Relationship</td>
+                                            <td>Sibling</td>
                                         </tr>
                                     </tbody>
                                 </table>

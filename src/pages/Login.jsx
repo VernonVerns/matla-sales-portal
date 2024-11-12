@@ -28,7 +28,8 @@ const Login = () => {
                 <button type='submit' className='sign-btn'>Sign In</button>
             </form>
             <div className='footer-part'>
-                <p>&copy; 2024 Absa AI. All rights reserved.</p>
+                <p>&copy; {new Date().getFullYear()} Matla Risk Services.</p>
+                <p>All rights reserved.</p>
                 <div className='terms-links'>
                     <a href="http://" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
                     <a href="http://" target="_blank" rel="noopener noreferrer">Terms & Conditions</a>
