@@ -69,3 +69,30 @@ export const banks = [
   { id: "5bb7bf00-6b03-4e06-8126-8104cd7b9dd5", name: "Tyme Bank" },
   { id: "b0fed1f9-bfed-4804-8599-0034351f5aa1", name: "UBANK" },
 ];
+
+export const quickMessages = [
+  { id: 1, message: "Hello! How can I assist you today?" },
+  {
+    id: 2,
+    message:
+      "I have resent the mandate for debit order approval. Please approve and let me know once done.",
+  },
+  {
+    id: 3,
+    message: "I understand your concern. Let me look into this for you.",
+  },
+  {
+    id: 4,
+    message: "Thank you for your patience. I am still working on your request.",
+  },
+  {
+    id: 5,
+    message:
+      "Your issue has been resolved. Is there anything else I can help you with?",
+  },
+  {
+    id: 6,
+    message:
+      "For your security, please do not share sensitive information like passwords or PINs in the chat.",
+  },
+];

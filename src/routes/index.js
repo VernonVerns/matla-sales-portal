@@ -43,7 +43,7 @@ const router = createBrowserRouter(
         ,
         <Route
           key="chat-with-client"
-          path="chat_with"
+          path="chat_with/:id"
           element={<ChatWithClient />}
         />
         ,

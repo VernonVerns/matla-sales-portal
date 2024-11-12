@@ -218,7 +218,7 @@ const SingleApplication = () => {
 
           {/* Action Buttons */}
           <div className="action-btns">
-            <Link to="/applications/chat_with" className="main-btn">
+            <Link to={`/applications/chat_with/${id}`} className="main-btn">
               Chat With Client
             </Link>
             <button type="button" className="border-btn">
