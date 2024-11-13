@@ -51,7 +51,7 @@ export const listenToChatUpdates = (chatId, dispatch) => {
 };
 
 // Function to update chat with a new message
-export const updateChatMessages = async (chatId, message, dispatch) => {
+export const updateChatMessages = async (chatId, message) => {
   try {
     const chatRef = doc(db, "chats", chatId);
 
@@ -65,8 +65,8 @@ export const updateChatMessages = async (chatId, message, dispatch) => {
     );
 
     // Dispatch action to update local Redux store
-    dispatch(updateMessages(message));
+    // dispatch(updateMessages(message));
   } catch (error) {
-    dispatch(setError(error.message)); // Handle any errors from Firestore
+    // dispatch(setError(error.message)); // Handle any errors from Firestore
   }
 };

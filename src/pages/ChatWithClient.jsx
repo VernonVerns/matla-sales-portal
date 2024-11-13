@@ -10,6 +10,7 @@ import {
 import { setLoading, setError } from "../slices/ChatSlice";
 import { quickMessages } from "../Contants";
 import moment from "moment";
+import { sendDynamicMessage } from "../api/WhatsApp";
 
 const ChatWithClient = () => {
   const [message, setMessage] = useState("");
@@ -36,26 +37,35 @@ const ChatWithClient = () => {
 
   useEffect(() => {
     if (chatId) {
-      dispatch(fetchChatById(chatId)); // Fetch chat data using chatId
+      // Fetch chat data using chatId
       listenToChatUpdates(chatId, dispatch); // Listen to real-time updates for the chat
     }
   }, [chatId, dispatch]); // Re-run when chatId changes
 
-  const handleSendMessage = () => {
+  // Send message function
+  const handleSendMessage = async () => {
     if (message.trim()) {
-      updateChatMessages(
-        chatId,
-        { text: message, from: "agent", timestamp: new Date().toISOString() },
-        dispatch
-      );
-      setMessage(""); // Clear message input after sending
+      // Avoid appending the same message twice
+      const newMessage = {
+        text: message,
+        from: "agent",
+        timestamp: new Date().toISOString(),
+      };
+      setMessage("");
+
+      // Update Redux state with new message
+      await updateChatMessages(chatId, newMessage);
+      await sendDynamicMessage(chatId, newMessage.text); // Send to WhatsApp
+      // Clear message input after sending
     }
   };
 
+  // Handle quick replies
   const handleUseQuickMessage = (msg) => {
     setMessage(msg); // Pre-fill the message input with the selected quick message
   };
 
+  // Conditional rendering based on loading or error status
   if (chatStatus === "loading") {
     return <div>Loading chat...</div>;
   }
@@ -81,7 +91,7 @@ const ChatWithClient = () => {
                 <div className="chat-msg-profile">
                   <div className="chat-msg-date">
                     {moment(msg.timestamp)
-                    //   .add(2, "hours")
+                      .add(2, "hours")
                       .format("YYYY-MM-DD/HH:mm:ss")}
                   </div>
                 </div>
