@@ -14,37 +14,33 @@ const Applications = () => {
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    // console.log(user);
-    const fetchApplications = async () => {
-      dispatch(setLoading(true));
-      dispatch(setError(null));
-      try {
-        const apps = await getApplicationsBySalesmanId(user.id);
-        dispatch(setApplications(apps));
-        console.log(apps);
-      } catch (err) {
-        dispatch(setError(err.message));
-      } finally {
-        dispatch(setLoading(false));
-      }
-    };
+    if (!user.id) return; // Don't fetch if there's no user id.
 
-    if (user.id) {
-      fetchApplications();
-    }
-  }, [dispatch, user]);
+    dispatch(setLoading(true)); // Set loading state to true when we start fetching
+
+    const unsubscribeFromUpdates = getApplicationsBySalesmanId(
+      user.id,
+      (apps) => dispatch(setApplications(apps)), // Update Redux state
+      (loadingState) => dispatch(setLoading(loadingState)), // Update loading state
+      (err) => dispatch(setError(err)) // Update error state
+    );
+
+    // Cleanup function to unsubscribe when component unmounts
+    return () => {
+      unsubscribeFromUpdates(); // Unsubscribe from the real-time listener
+    };
+  }, [dispatch, user.id]); // Effect runs only when `user.id` changes
 
   if (loading) return <p>Loading applications...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <div id="all_applications">
-      <div class="header-part">
-        {/* {JSON.stringify(user)} */}
+      <div className="header-part">
         <h1>All Applications</h1>
       </div>
-      <div class="nav-tabs">
-        <button type="button" class="active-tab">
+      <div className="nav-tabs">
+        <button type="button" className="active-tab">
           All
         </button>
         <button type="button">Completed</button>
@@ -55,24 +51,24 @@ const Applications = () => {
         </button>
       </div>
 
-      <div class="all-apps">
-        <div class="sec-header">
+      <div className="all-apps">
+        <div className="sec-header">
           <h4>Applications</h4>
-          <div class="action-side">
+          <div className="action-side">
             <select name="filter" id="">
               <option value="">
-                <i class="fa bars-filter"></i> Filter
+                <i className="fa bars-filter"></i> Filter
               </option>
               <option value="all">All</option>
               <option value="recent">Recent</option>
               <option value="oldest">Oldest</option>
             </select>
-            <div class="sorted-by">
+            <div className="sorted-by">
               Sorted by: <span>Recent added</span>
             </div>
           </div>
         </div>
-        <div class="sec-main">
+        <div className="sec-main">
           <ListTable />
         </div>
       </div>

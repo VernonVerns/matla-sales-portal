@@ -76,7 +76,7 @@ const ChatWithClient = () => {
   return (
     <div className="chat-with-client">
       <div className="chat-header">
-        <h4>Chat with Client, WhatsApp Id: {chat.id}</h4>
+        <h4>Chat with Client, WhatsApp Id: {chat && chat.id}</h4>
       </div>
 
       <div className="chat-wrapper">
