@@ -9,6 +9,7 @@ import {
 } from "../api/Chat";
 import { setLoading, setError } from "../slices/ChatSlice";
 import { quickMessages } from "../Contants";
+import moment from "moment";
 
 const ChatWithClient = () => {
   const [message, setMessage] = useState("");
@@ -78,7 +79,11 @@ const ChatWithClient = () => {
                 key={index}
               >
                 <div className="chat-msg-profile">
-                  <div className="chat-msg-date">{msg.timestamp}</div>
+                  <div className="chat-msg-date">
+                    {moment(msg.timestamp)
+                    //   .add(2, "hours")
+                      .format("YYYY-MM-DD/HH:mm:ss")}
+                  </div>
                 </div>
                 <div className="chat-msg-content">
                   <div className="chat-msg-text">{msg.text}</div>

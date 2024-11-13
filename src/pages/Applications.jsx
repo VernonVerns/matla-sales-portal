@@ -11,15 +11,15 @@ import { getApplicationsBySalesmanId } from "../api/Application";
 const Applications = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.applications);
-  const user = useSelector((state) => state.user);
-  // const { id: salesmanId } = useSelector((state) => state.user); // Get `id` from user state as salesmanId
-  let salesmanId = "Fez12";
+  const { user } = useSelector((state) => state.auth);
+
   useEffect(() => {
+    // console.log(user);
     const fetchApplications = async () => {
       dispatch(setLoading(true));
       dispatch(setError(null));
       try {
-        const apps = await getApplicationsBySalesmanId(salesmanId);
+        const apps = await getApplicationsBySalesmanId(user.id);
         dispatch(setApplications(apps));
         console.log(apps);
       } catch (err) {
@@ -29,10 +29,10 @@ const Applications = () => {
       }
     };
 
-    if (salesmanId) {
+    if (user.id) {
       fetchApplications();
     }
-  }, [dispatch, salesmanId]);
+  }, [dispatch, user]);
 
   if (loading) return <p>Loading applications...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -40,6 +40,7 @@ const Applications = () => {
   return (
     <div id="all_applications">
       <div class="header-part">
+        {/* {JSON.stringify(user)} */}
         <h1>All Applications</h1>
       </div>
       <div class="nav-tabs">
