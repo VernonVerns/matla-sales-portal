@@ -42,7 +42,8 @@ export const listenToChatUpdates = (chatId, dispatch) => {
     const chatRef = doc(db, "chats", chatId);
     onSnapshot(chatRef, (snapshot) => {
       if (snapshot.exists()) {
-        dispatch(setChat(snapshot.data())); // Dispatch the updated chat data to Redux
+        const data = { ...snapshot.data(), id: snapshot.id };
+        dispatch(setChat(data)); // Dispatch the updated chat data to Redux
       }
     });
   } catch (error) {

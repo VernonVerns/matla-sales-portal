@@ -45,7 +45,6 @@ const ChatWithClient = () => {
   // Send message function
   const handleSendMessage = async () => {
     if (message.trim()) {
-      // Avoid appending the same message twice
       const newMessage = {
         text: message,
         from: "agent",
@@ -53,10 +52,10 @@ const ChatWithClient = () => {
       };
       setMessage("");
 
-      // Update Redux state with new message
-      await updateChatMessages(chatId, newMessage);
-      await sendDynamicMessage(chatId, newMessage.text); // Send to WhatsApp
-      // Clear message input after sending
+      await Promise.all([
+        sendDynamicMessage(chatId, newMessage.text),
+        updateChatMessages(chatId, newMessage),
+      ]);
     }
   };
 
@@ -77,7 +76,7 @@ const ChatWithClient = () => {
   return (
     <div className="chat-with-client">
       <div className="chat-header">
-        <h4>Chat with Client</h4>
+        <h4>Chat with Client, WhatsApp Id: {chat.id}</h4>
       </div>
 
       <div className="chat-wrapper">
