@@ -19,7 +19,7 @@ const Applications = () => {
     dispatch(setLoading(true)); // Set loading state to true when we start fetching
 
     const unsubscribeFromUpdates = getApplicationsBySalesmanId(
-      user.id,
+      user.id.toLowerCase(),
       (apps) => dispatch(setApplications(apps)), // Update Redux state
       (loadingState) => dispatch(setLoading(loadingState)), // Update loading state
       (err) => dispatch(setError(err)) // Update error state
