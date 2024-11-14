@@ -221,9 +221,9 @@ const SingleApplication = () => {
             <Link to={`/applications/chat_with/${id}`} className="main-btn">
               Chat With Client
             </Link>
-            <button type="button" className="border-btn">
+            {/* <button type="button" className="border-btn">
               Send Mandate
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
