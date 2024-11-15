@@ -10,31 +10,40 @@ import { getSingleApplicationById } from "../api/Application";
 const SingleApplication = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { openApplication } = useSelector((state) => state.applications);
+  const { openApplication, loading, error } = useSelector(
+    (state) => state.applications
+  );
   const [applicationId, setApplicationId] = useState(null);
 
   useEffect(() => {
     const fullUrl = window.location.href;
-    const match = fullUrl.match(/chat_with\/([^/?#]+)/);
+    const match = fullUrl.match(/single_application\/([^/?#]+)/);
 
     if (match && match[1]) {
       setApplicationId(match[1]);
-      console.log("Application Id:", match[1]);
     } else {
       console.error("Application ID not found in URL");
     }
   }, []); // Run only once when component mounts
 
   useEffect(() => {
-    // const applicationId = "27780687445";
-    const unsubscribe = getSingleApplicationById(applicationId, dispatch);
+    let unsubscribe;
 
-    return () => unsubscribe(); // Cleanup listener on component unmount
-  }, [dispatch]);
+    if (applicationId) {
+      unsubscribe = getSingleApplicationById(applicationId, dispatch);
+    }
 
-  if (!openApplication) {
-    return <div>Application not found</div>;
-  }
+    // Cleanup listener on component unmount
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, [applicationId, dispatch]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!openApplication) return <div>Application not found</div>;
 
   const getSafeValue = (value, fallback = "Unknown") => value ?? fallback;
 
