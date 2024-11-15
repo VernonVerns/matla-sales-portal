@@ -1,7 +1,17 @@
-import { collection, query, where, onSnapshot } from "firebase/firestore";
+import { collection, query, where, onSnapshot, doc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
+import {
+  setOpenApplication,
+  setLoading,
+  setError,
+} from "../slices/ApplicationSlice";
 
-export const getApplicationsBySalesmanId = (salesmanId, setApplications, setLoading, setError) => {
+export const getApplicationsBySalesmanId = (
+  salesmanId,
+  setApplications,
+  setLoading,
+  setError
+) => {
   const applicationsRef = collection(db, "registration");
   const q = query(applicationsRef, where("salesmanId", "==", salesmanId));
 
@@ -14,14 +24,40 @@ export const getApplicationsBySalesmanId = (salesmanId, setApplications, setLoad
         ...doc.data(),
       }));
 
-      setApplications(applications);  // Update the Redux state with new data
-      setLoading(false);  // Set loading state to false when data is received
+      setApplications(applications); // Update the Redux state with new data
+      setLoading(false); // Set loading state to false when data is received
     },
     (error) => {
-      setError(error.message);  // Handle error
+      setError(error.message); // Handle error
       setLoading(false);
     }
   );
 
   return unsubscribe; // Return the unsubscribe function to be called later
+};
+
+export const getSingleApplicationById = (applicationId, dispatch) => {
+  const applicationRef = doc(db, "registration", applicationId);
+
+  // Real-time listener for single application
+  dispatch(setLoading(true));
+  const unsubscribe = onSnapshot(
+    applicationRef,
+    (docSnapshot) => {
+      if (docSnapshot.exists()) {
+        dispatch(
+          setOpenApplication({ id: docSnapshot.id, ...docSnapshot.data() })
+        );
+      } else {
+        dispatch(setError("Application not found"));
+      }
+      dispatch(setLoading(false));
+    },
+    (error) => {
+      dispatch(setError(error.message));
+      dispatch(setLoading(false));
+    }
+  );
+
+  return unsubscribe; // Return the unsubscribe function to stop listening when needed
 };

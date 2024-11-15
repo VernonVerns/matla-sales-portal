@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   applications: [],
+  openApplication: null,
   loading: false,
   error: null,
 };
@@ -13,6 +14,9 @@ const applicationSlice = createSlice({
     setApplications: (state, action) => {
       state.applications = action.payload;
     },
+    setOpenApplication: (state, action) => {
+      state.openApplication = action.payload;
+    },
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
@@ -22,7 +26,7 @@ const applicationSlice = createSlice({
   },
 });
 
-export const { setApplications, setLoading, setError } =
+export const { setApplications, setLoading, setError, setOpenApplication } =
   applicationSlice.actions;
 
 export default applicationSlice;

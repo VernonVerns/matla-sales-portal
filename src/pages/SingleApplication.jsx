@@ -1,26 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckIcon from "@mui/icons-material/Check";
 import { banks } from "../Contants";
+import { getSingleApplicationById } from "../api/Application";
 
 const SingleApplication = () => {
-  const { id } = useParams(); // Get the dynamic ID parameter from the URL
-  const { applications } = useSelector((state) => state.applications); // Get applications from Redux store
-
-  const [application, setApplication] = useState(null);
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { openApplication } = useSelector((state) => state.applications);
+  const [applicationId, setApplicationId] = useState(null);
 
   useEffect(() => {
-    // Find the application by the ID
-    const foundApplication = applications.find((app) => app.id === id);
-    setApplication(foundApplication);
-  }, [id, applications]);
+    const fullUrl = window.location.href;
+    const match = fullUrl.match(/chat_with\/([^/?#]+)/);
 
-  if (!application) {
+    if (match && match[1]) {
+      setApplicationId(match[1]);
+      console.log("Application Id:", match[1]);
+    } else {
+      console.error("Application ID not found in URL");
+    }
+  }, []); // Run only once when component mounts
+
+  useEffect(() => {
+    // const applicationId = "27780687445";
+    const unsubscribe = getSingleApplicationById(applicationId, dispatch);
+
+    return () => unsubscribe(); // Cleanup listener on component unmount
+  }, [dispatch]);
+
+  if (!openApplication) {
     return <div>Application not found</div>;
   }
+
+  const getSafeValue = (value, fallback = "Unknown") => value ?? fallback;
 
   return (
     <div id="single_application">
@@ -28,26 +44,27 @@ const SingleApplication = () => {
         <div className="header-part">
           <div className="applicant">
             <h1>
-              {application.firstName} {application.lastName}
+              {getSafeValue(openApplication.firstName)}{" "}
+              {getSafeValue(openApplication.lastName)}
             </h1>
-            <span>{application.email}</span>
+            <span>{getSafeValue(openApplication.email)}</span>
           </div>
           <div className="quick-details">
             <div className="detail-item">
               <span>Applied For</span>
-              <h4>{application.titleTypeOfCoverSelection}</h4>
+              <h4>{getSafeValue(openApplication.titleTypeOfCoverSelection)}</h4>
             </div>
             <div className="detail-item">
               <span>Email</span>
-              <h4>{application.email}</h4>
+              <h4>{getSafeValue(openApplication.email)}</h4>
             </div>
             <div className="detail-item">
               <span>Phone</span>
-              <h4>{application.cellNumber}</h4>
+              <h4>{getSafeValue(openApplication.cellNumber)}</h4>
             </div>
             <div className="detail-item">
               <span>WhatsApp Number</span>
-              <h4>{application.id}</h4>
+              <h4>{getSafeValue(openApplication.id)}</h4>
             </div>
           </div>
         </div>
@@ -56,12 +73,18 @@ const SingleApplication = () => {
           <div className="details-side">
             <div className="amount-details">
               <div className="qualifying">
-                <h1>{application.coverAmount}</h1>
-                <span>Cover {application.titleTypeOfCoverSelection}</span>
+                <h1>{getSafeValue(openApplication.coverAmount)}</h1>
+                <span>
+                  Cover{" "}
+                  {getSafeValue(openApplication.titleTypeOfCoverSelection)}
+                </span>
               </div>
               <div className="installments">
-                <h4>{application.descriptionMainMemberPremiumDetails}</h4>
-                {/* <span>Monthly installments</span> */}
+                <h4>
+                  {getSafeValue(
+                    openApplication.descriptionMainMemberPremiumDetails
+                  )}
+                </h4>
               </div>
             </div>
 
@@ -73,24 +96,25 @@ const SingleApplication = () => {
                     <tr>
                       <td>Full Name</td>
                       <td>
-                        {application.firstName} {application.lastName}
+                        {getSafeValue(openApplication.firstName)}{" "}
+                        {getSafeValue(openApplication.lastName)}
                       </td>
                     </tr>
                     <tr>
                       <td>ID Number</td>
-                      <td>{application.idNumber}</td>
+                      <td>{getSafeValue(openApplication.idNumber)}</td>
                     </tr>
                     <tr>
                       <td>Marital Status</td>
-                      <td>{application.maritalStatus}</td>
+                      <td>{getSafeValue(openApplication.maritalStatus)}</td>
                     </tr>
                     <tr>
                       <td>Physical Address</td>
-                      <td>{application.physicalAddress}</td>
+                      <td>{getSafeValue(openApplication.physicalAddress)}</td>
                     </tr>
                     <tr>
                       <td>Zip Code</td>
-                      <td>{application.zipCode}</td>
+                      <td>{getSafeValue(openApplication.zipCode)}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -103,19 +127,27 @@ const SingleApplication = () => {
                   <tbody>
                     <tr>
                       <td>Full Names</td>
-                      <td>{application.beneficiaryFullNames}</td>
+                      <td>
+                        {getSafeValue(openApplication.beneficiaryFullNames)}
+                      </td>
                     </tr>
                     <tr>
                       <td>Age</td>
-                      <td>{application.beneficiaryAge} years</td>
+                      <td>
+                        {getSafeValue(openApplication.beneficiaryAge)} years
+                      </td>
                     </tr>
                     <tr>
                       <td>Cell Number</td>
-                      <td>{application.beneficiaryCellNumber}</td>
+                      <td>
+                        {getSafeValue(openApplication.beneficiaryCellNumber)}
+                      </td>
                     </tr>
                     <tr>
                       <td>Relationship</td>
-                      <td>{application.beneficiaryRelationship}</td>
+                      <td>
+                        {getSafeValue(openApplication.beneficiaryRelationship)}
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -129,24 +161,22 @@ const SingleApplication = () => {
                     <tr>
                       <td>Bank Name</td>
                       <td>
-                        {banks.find((bank) => bank.id === application.bankName)
-                          ? banks.find(
-                              (bank) => bank.id === application.bankName
-                            ).name
-                          : "Unknow Bank"}
+                        {banks.find(
+                          (bank) => bank.id === openApplication.bankName
+                        )?.name ?? "Unknown Bank"}
                       </td>
                     </tr>
                     <tr>
                       <td>Account Type</td>
-                      <td>{application.accountType}</td>
+                      <td>{getSafeValue(openApplication.accountType)}</td>
                     </tr>
                     <tr>
                       <td>Account Number</td>
-                      <td>{application.accountNumber}</td>
+                      <td>{getSafeValue(openApplication.accountNumber)}</td>
                     </tr>
                     <tr>
                       <td>Debit Order Date</td>
-                      <td>{application.debitDate}</td>
+                      <td>{getSafeValue(openApplication.debitDate)}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -164,10 +194,10 @@ const SingleApplication = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {application.attachments.map((file, index) => (
+                    {openApplication.attachments?.map((file, index) => (
                       <tr key={index}>
-                        <td>{file.description}</td>
-                        <td>{file.url.split(".").pop()}</td>
+                        <td>{getSafeValue(file.description)}</td>
+                        <td>{getSafeValue(file.url?.split(".").pop())}</td>
                         <td>
                           <button
                             className="view-btn"
@@ -182,37 +212,44 @@ const SingleApplication = () => {
                           </button>
                         </td>
                       </tr>
-                    ))}
+                    )) ?? (
+                      <tr>
+                        <td colSpan="3">No attachments found</td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
 
-              {application.additionalMembers &&
-                application.additionalMembers.length > 0 && (
-                  <div className="additional-members full-detail">
-                    <h4 className="sec-title">Additional Members</h4>
-                    {application.additionalMembers.map((member, index) => (
-                      <div key={index} className="additional-member-item">
-                        <table className="table">
-                          <tbody>
-                            <tr>
-                              <td>Full Names</td>
-                              <td>{member.familyMemberFullName}</td>
-                            </tr>
-                            <tr>
-                              <td>Age</td>
-                              <td>{member.familyMemberAge} years</td>
-                            </tr>
-                            <tr>
-                              <td>Relationship</td>
-                              <td>{member.familyMemberRelationship}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    ))}
-                  </div>
-                )}
+              {openApplication.additionalMembers?.length > 0 && (
+                <div className="additional-members full-detail">
+                  <h4 className="sec-title">Additional Members</h4>
+                  {openApplication.additionalMembers.map((member, index) => (
+                    <div key={index} className="additional-member-item">
+                      <table className="table">
+                        <tbody>
+                          <tr>
+                            <td>Full Names</td>
+                            <td>{getSafeValue(member.familyMemberFullName)}</td>
+                          </tr>
+                          <tr>
+                            <td>Age</td>
+                            <td>
+                              {getSafeValue(member.familyMemberAge)} years
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Relationship</td>
+                            <td>
+                              {getSafeValue(member.familyMemberRelationship)}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
@@ -221,9 +258,6 @@ const SingleApplication = () => {
             <Link to={`/applications/chat_with/${id}`} className="main-btn">
               Chat With Client
             </Link>
-            {/* <button type="button" className="border-btn">
-              Send Mandate
-            </button> */}
           </div>
         </div>
       </div>
