@@ -25,20 +25,19 @@ const Dashboard = () => {
     dispatch(setLoading(true)); // Set loading state to true when we start fetching
 
     // Conditional fetching based on the selected radio button
-    const unsubscribeFromUpdates =
-      viewOption === "all"
-        ? getApplicationsBySalesmanId(
-            "all",
-            (apps) => dispatch(setApplications(apps)), // Update Redux state
-            (loadingState) => dispatch(setLoading(loadingState)), // Update loading state
-            (err) => dispatch(setError(err)) // Update error state
-          )
-        : getApplicationsBySalesmanId(
-            user.id.toLowerCase(),
-            (apps) => dispatch(setApplications(apps)), // Update Redux state
-            (loadingState) => dispatch(setLoading(loadingState)), // Update loading state
-            (err) => dispatch(setError(err)) // Update error state
-          );
+    const unsubscribeFromUpdates = user.isAdmin
+      ? getApplicationsBySalesmanId(
+          "all",
+          (apps) => dispatch(setApplications(apps)), // Update Redux state
+          (loadingState) => dispatch(setLoading(loadingState)), // Update loading state
+          (err) => dispatch(setError(err)) // Update error state
+        )
+      : getApplicationsBySalesmanId(
+          user.id.toLowerCase(),
+          (apps) => dispatch(setApplications(apps)), // Update Redux state
+          (loadingState) => dispatch(setLoading(loadingState)), // Update loading state
+          (err) => dispatch(setError(err)) // Update error state
+        );
 
     // Cleanup function to unsubscribe when component unmounts
     return () => {
