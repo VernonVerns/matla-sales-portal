@@ -3,14 +3,14 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const ListTable = () => {
+const ListTable = ({ viewOption, tabFilter }) => {
   const { applications, loading, error } = useSelector(
     (state) => state.applications
   );
+  const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const onViewApplicationHandler = (applicationId) => {
-    // Navigate to the specific application details page
     navigate(`single_application/${applicationId}`);
   };
 
@@ -22,9 +22,38 @@ const ListTable = () => {
     return <div>Error: {error}</div>;
   }
 
+  // Filter the applications based on the radio button (viewOption) and tab filter (tabFilter)
+  const filteredApplications =
+    viewOption === "mine"
+      ? applications.filter((app) => app.salesmanId === user.id) // Filter by user's salesmanId
+      : applications; // If 'all', show all applications
+
+  const tabFilteredApplications = filteredApplications.filter((app) => {
+    switch (tabFilter) {
+      case "completed":
+        return app.status === "completed" && !app.errorItem;
+      case "unadvised":
+        // Check if paymentArrangements exists and if the last item in the array has errorItems that is not null
+        return (
+          app.paymentArrangements &&
+          app.paymentArrangements.length > 0 &&
+          app.paymentArrangements[app.paymentArrangements.length - 1]
+            .errorItems !== null
+        );
+      case "incomplete":
+        // Check if no paymentArrangements or status is not completed
+        return (
+          !app.paymentArrangements ||
+          (app.status !== "completed" && app.status !== "unadvised")
+        );
+      default:
+        return true; // 'all' case, show all applications
+    }
+  });
+
   return (
     <div className="list-table">
-      {applications.map((application) => (
+      {tabFilteredApplications.map((application) => (
         <div key={application.id} className="list-item">
           <div className="item-data">
             <h3 className="name">

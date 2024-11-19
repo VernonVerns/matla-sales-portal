@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ListTable from "../components/ListTable";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,11 +7,15 @@ import {
   setError,
 } from "../slices/ApplicationSlice";
 import { getApplicationsBySalesmanId } from "../api/Application";
+import { Radio, RadioGroup, FormControlLabel } from "@mui/material";
 
 const Applications = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.applications);
   const { user } = useSelector((state) => state.auth);
+
+  const [viewOption, setViewOption] = useState("all"); // For radio buttons (all/mine)
+  const [tabFilter, setTabFilter] = useState("all"); // For tab filtering (All, Completed, Unadvised, Incomplete)
 
   useEffect(() => {
     if (!user.id) return; // Don't fetch if there's no user id.
@@ -36,47 +40,82 @@ const Applications = () => {
     return () => {
       unsubscribeFromUpdates(); // Unsubscribe from the real-time listener
     };
-  }, [dispatch, user.id]); 
-  
+  }, [dispatch, user.id]);
+
   if (loading) return <p>Loading applications...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <div id="all_applications">
       <div className="header-part">
-        <h1>All Applications</h1>
+        <h1>Applications</h1>
       </div>
       <div className="nav-tabs">
-        <button type="button" className="active-tab">
+        <button
+          type="button"
+          className={tabFilter === "all" ? "active-tab" : ""}
+          onClick={() => setTabFilter("all")}
+        >
           All
         </button>
-        {/* <button type="button">Completed</button>
-        <button type="button">Mandate Approved</button>
-        <button type="button">Mandate Pending</button>
-        <button type="button" className="incomplete">
-          Incomplete <span className="badge bg-dark">21</span>
-        </button> */}
+        <button
+          type="button"
+          className={tabFilter === "completed" ? "active-tab" : ""}
+          onClick={() => setTabFilter("completed")}
+        >
+          Completed
+        </button>
+        <button
+          type="button"
+          className={tabFilter === "unadvised" ? "active-tab" : ""}
+          onClick={() => setTabFilter("unadvised")}
+        >
+          Unadvised Debit Order
+        </button>
+        <button
+          type="button"
+          className={tabFilter === "incomplete" ? "active-tab" : ""}
+          onClick={() => setTabFilter("incomplete")}
+        >
+          Incomplete
+        </button>
+      </div>
+      <div
+        className="radio-buttons"
+        style={{
+          display: "flex",
+          justifyContent: "flex-end", // Align to the far right
+          paddingRight: "60px", // Optional: adds some space from the right edge
+          color: "white",
+        }}
+      >
+        <RadioGroup
+          row
+          value={viewOption}
+          onChange={(e) => setViewOption(e.target.value)}
+        >
+          <FormControlLabel
+            value="all"
+            control={<Radio />}
+            label="All"
+            style={{ color: "white" }}
+          />
+          <FormControlLabel
+            value="mine"
+            control={<Radio />}
+            label="Mine"
+            style={{ color: "white" }}
+          />
+        </RadioGroup>
       </div>
 
       <div className="all-apps">
         <div className="sec-header">
           <h4>Applications</h4>
-          {/* <div className="action-side">
-            <select name="filter" id="">
-              <option value="">
-                <i className="fa bars-filter"></i> Filter
-              </option>
-              <option value="all">All</option>
-              <option value="recent">Recent</option>
-              <option value="oldest">Oldest</option>
-            </select>
-            <div className="sorted-by">
-              Sorted by: <span>Recent added</span>
-            </div>
-          </div> */}
         </div>
         <div className="sec-main">
-          <ListTable />
+          {/* Pass both viewOption and tabFilter to ListTable */}
+          <ListTable viewOption={viewOption} tabFilter={tabFilter} />
         </div>
       </div>
     </div>
