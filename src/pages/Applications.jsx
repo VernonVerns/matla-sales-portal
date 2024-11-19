@@ -18,19 +18,26 @@ const Applications = () => {
 
     dispatch(setLoading(true)); // Set loading state to true when we start fetching
 
-    const unsubscribeFromUpdates = getApplicationsBySalesmanId(
-      user.id.toLowerCase(),
-      (apps) => dispatch(setApplications(apps)), // Update Redux state
-      (loadingState) => dispatch(setLoading(loadingState)), // Update loading state
-      (err) => dispatch(setError(err)) // Update error state
-    );
+    const unsubscribeFromUpdates = user.isAdmin
+      ? getApplicationsBySalesmanId(
+          "all",
+          (apps) => dispatch(setApplications(apps)), // Update Redux state
+          (loadingState) => dispatch(setLoading(loadingState)), // Update loading state
+          (err) => dispatch(setError(err)) // Update error state
+        )
+      : getApplicationsBySalesmanId(
+          user.id.toLowerCase(),
+          (apps) => dispatch(setApplications(apps)), // Update Redux state
+          (loadingState) => dispatch(setLoading(loadingState)), // Update loading state
+          (err) => dispatch(setError(err)) // Update error state
+        );
 
     // Cleanup function to unsubscribe when component unmounts
     return () => {
       unsubscribeFromUpdates(); // Unsubscribe from the real-time listener
     };
-  }, [dispatch, user.id]); // Effect runs only when `user.id` changes
-
+  }, [dispatch, user.id]); 
+  
   if (loading) return <p>Loading applications...</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -43,18 +50,18 @@ const Applications = () => {
         <button type="button" className="active-tab">
           All
         </button>
-        <button type="button">Completed</button>
+        {/* <button type="button">Completed</button>
         <button type="button">Mandate Approved</button>
         <button type="button">Mandate Pending</button>
         <button type="button" className="incomplete">
           Incomplete <span className="badge bg-dark">21</span>
-        </button>
+        </button> */}
       </div>
 
       <div className="all-apps">
         <div className="sec-header">
           <h4>Applications</h4>
-          <div className="action-side">
+          {/* <div className="action-side">
             <select name="filter" id="">
               <option value="">
                 <i className="fa bars-filter"></i> Filter
@@ -66,7 +73,7 @@ const Applications = () => {
             <div className="sorted-by">
               Sorted by: <span>Recent added</span>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="sec-main">
           <ListTable />

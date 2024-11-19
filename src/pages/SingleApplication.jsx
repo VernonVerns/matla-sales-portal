@@ -6,6 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import CheckIcon from "@mui/icons-material/Check";
 import { banks } from "../Contants";
 import { getSingleApplicationById } from "../api/Application";
+import { extractPremiumAmount } from "../utils/utils";
 
 const SingleApplication = () => {
   const { id } = useParams();
@@ -88,13 +89,27 @@ const SingleApplication = () => {
                   {getSafeValue(openApplication.titleTypeOfCoverSelection)}
                 </span>
               </div>
-              <div className="installments">
-                <h4>
-                  {getSafeValue(
-                    openApplication.descriptionMainMemberPremiumDetails
-                  )}
-                </h4>
-              </div>
+
+              {openApplication.descriptionMainMemberPremiumDetails ? (
+                <div className="installments">
+                  <h4>
+                    {getSafeValue(
+                      openApplication.descriptionMainMemberPremiumDetails
+                    )}{" "}
+                    - Total Monthly Premium R
+                    {parseFloat(
+                      (openApplication.additionalMembers
+                        ? openApplication.additionalMembers.length + 1
+                        : 1) *
+                        extractPremiumAmount(
+                          openApplication.descriptionMainMemberPremiumDetails
+                        )
+                    )}
+                  </h4>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
 
             <div className="more-details">

@@ -39,7 +39,7 @@ const SideBar = () => {
                     </div>
                 </div>
                 <div className="bottom-menu">
-                    <button><SettingsIcon /></button>
+                    {/* <button><SettingsIcon /></button> */}
                     <button className="sign-out" onClick={handleLogout}><LogoutIcon /></button>
                 </div>
             </div>

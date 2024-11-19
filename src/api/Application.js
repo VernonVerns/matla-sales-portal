@@ -13,9 +13,14 @@ export const getApplicationsBySalesmanId = (
   setError
 ) => {
   const applicationsRef = collection(db, "registration");
-  const q = query(applicationsRef, where("salesmanId", "==", salesmanId));
 
-  // Real-time listener for applications
+  let q = null;
+  if (salesmanId == "all") {
+    q = query(applicationsRef);
+  } else {
+    q = query(applicationsRef, where("salesmanId", "==", salesmanId));
+  }
+
   const unsubscribe = onSnapshot(
     q,
     (querySnapshot) => {
@@ -24,6 +29,7 @@ export const getApplicationsBySalesmanId = (
         ...doc.data(),
       }));
 
+      console.log(applications)
       setApplications(applications); // Update the Redux state with new data
       setLoading(false); // Set loading state to false when data is received
     },

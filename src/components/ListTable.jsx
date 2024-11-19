@@ -27,11 +27,18 @@ const ListTable = () => {
       {applications.map((application) => (
         <div key={application.id} className="list-item">
           <div className="item-data">
-            <h3 className="name">{application.firstName} {application.lastName}</h3>
+            <h3 className="name">
+              {application.firstName} {application.lastName}
+            </h3>
           </div>
           <div className="item-data">
             <span className="data-label">Premium</span>
-            <h4>R{application.totalPremium} ({application.titleMainMemberPremiumDetails})</h4>
+            <h4>
+              {" "}
+              {application.titleMainMemberPremiumDetails
+                ? `R ${application.totalPremium} (${application.titleMainMemberPremiumDetails})`
+                : ""}
+            </h4>
           </div>
           <div className="item-data">
             <span className="data-label">Cover Selection</span>
@@ -43,7 +50,13 @@ const ListTable = () => {
           </div>
           <div className="item-data">
             <span className="data-label">Status</span>
-            <h4 className={application.status === "completed" ? "completed" : "pending"}>{application.status}</h4>
+            <h4
+              className={
+                application.status === "completed" ? "completed" : "pending"
+              }
+            >
+              {application.status}
+            </h4>
           </div>
           <div className="item-data">
             <button

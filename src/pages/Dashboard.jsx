@@ -1,69 +1,114 @@
-import React from 'react';
-import LineGraph from '../components/LineGraph';
-import moment from "moment";
-import PerfomanceGraph from '../components/PerfomanceGraph';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getApplicationsBySalesmanId } from "../api/Application";
+import {
+  setApplications,
+  setError,
+  setLoading,
+} from "../slices/ApplicationSlice";
+import PerfomanceGraph from "../components/PerfomanceGraph";
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const { loading, error, applications } = useSelector(
+    (state) => state.applications
+  );
+  const { user } = useSelector((state) => state.auth);
 
-    const last30Days = Array.from({ length: 30 }, (_, i) =>
-        moment().subtract(i, "days").format("MMM DD")
-    ).reverse();
+  useEffect(() => {
+    if (!user.id) return; // Don't fetch if there's no user id.
 
-    const dummyData = Array.from({ length: 30 }, () => Math.floor(Math.random() * (70 - 2 + 1)) + 2);
+    dispatch(setLoading(true)); // Set loading state to true when we start fetching
 
-    return(
-        <>
-        <div id="dashboard">
-            <div className="header-part">
-                    <h1>Dashboard</h1>
-                    {/* <div className="right-hand"></div> */}
-            </div>
-            <div className="applications_stats">
-                <div className="stat-card">
-                    <div className="card-header">
-                        <span className="color bg-success"></span>
-                        <h1>#Completed</h1>
-                    </div>
+    const unsubscribeFromUpdates = user.isAdmin
+      ? getApplicationsBySalesmanId(
+          "all",
+          (apps) => dispatch(setApplications(apps)), // Update Redux state
+          (loadingState) => dispatch(setLoading(loadingState)), // Update loading state
+          (err) => dispatch(setError(err)) // Update error state
+        )
+      : getApplicationsBySalesmanId(
+          user.id.toLowerCase(),
+          (apps) => dispatch(setApplications(apps)), // Update Redux state
+          (loadingState) => dispatch(setLoading(loadingState)), // Update loading state
+          (err) => dispatch(setError(err)) // Update error state
+        );
 
-                    <h4><span className="number">203</span> Completed Applications</h4>
-                </div>
-                <div className="stat-card">
-                    <div className="card-header">
-                        <span className="color bg-primary"></span>
-                        <h1>#Mandate Approved</h1>
-                    </div>
+    // Cleanup function to unsubscribe when component unmounts
+    return () => {
+      unsubscribeFromUpdates(); // Unsubscribe from the real-time listener
+    };
+  }, [dispatch, user.id]);
 
-                    <h4><span className="number">133</span> Approved Debit Order</h4>
-                </div>
-                <div className="stat-card">
-                    <div className="card-header">
-                        <span className="color bg-danger"></span>
-                        <h1>#Mandate Pending</h1>
-                    </div>
+  // Calculate the counts based on the `applications` data
+  const completedCount = applications.filter(
+    (app) =>
+      app.status === "completed" &&
+      app.paymentArrangements &&
+      app.paymentArrangements.length > 0 &&
+      app.paymentArrangements[app.paymentArrangements.length - 1].errorItems ===
+        null
+  ).length;
 
-                    <h4><span className="number">70</span> Pending Debit Order</h4>
-                </div>
-                <div className="stat-card incomplete">
-                    <div className="card-header">
-                        <span className="color bg-dark"></span>
-                        <h1>#Incomplete</h1>
-                    </div>
+  const unadvisedDebitOrderCount = applications.filter(
+    (app) =>
+      app.paymentArrangements &&
+      app.paymentArrangements.length > 0 &&
+      app.paymentArrangements[app.paymentArrangements.length - 1].errorItems !==
+        null
+  ).length;
 
-                    <h4><span className="number">16</span> Incomplete Applications</h4>
-                </div>
-            </div>
+  const uncompletedCount = applications.filter(
+    (app) =>
+      app.status !== "completed" &&
+      (!app.paymentArrangements ||
+        app.paymentArrangements.length === 0 ||
+        app.paymentArrangements[app.paymentArrangements.length - 1]
+          .errorItems === null)
+  ).length;
 
-            <div className="pending-application">
-                {/* <div className="sec-header">
-                    <h4>Pending Applications</h4>
-                </div> */}
-                {/* {last30Days} */}
-                {/* <LineGraph seriesData={dummyData} xAxisData={last30Days} />, */}
-                <PerfomanceGraph/>
-            </div>
-,        </div>
-    ,</>
-    )
-}
+  return (
+    <div id="dashboard">
+      <div className="header-part">
+        <h1>Dashboard</h1>
+      </div>
+      <div className="applications_stats">
+        <div className="stat-card">
+          <div className="card-header">
+            <span className="color bg-success"></span>
+            <h1>#Completed</h1>
+          </div>
+          <h4>
+            <span className="number">{completedCount}</span> Completed
+            Applications
+          </h4>
+        </div>
+        <div className="stat-card">
+          <div className="card-header">
+            <span className="color bg-warning"></span>
+            <h1>#Unadvised Debit Order</h1>
+          </div>
+          <h4>
+            <span className="number">{unadvisedDebitOrderCount}</span> Unadvised
+            Debit Order
+          </h4>
+        </div>
+        <div className="stat-card incomplete">
+          <div className="card-header">
+            <span className="color bg-danger"></span>
+            <h1>#Incomplete</h1>
+          </div>
+          <h4>
+            <span className="number">{uncompletedCount}</span> Incomplete
+            Applications
+          </h4>
+        </div>
+      </div>
+      <div>
+        <PerfomanceGraph />
+      </div>
+    </div>
+  );
+};
 
 export default Dashboard;
